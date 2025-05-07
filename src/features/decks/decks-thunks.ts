@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 import { decksAPI, UpdateDeckParams } from './decks-api.ts'
 import { addDeckAC, deleteDeckAC, setDecksAC, updateDeckAC } from './decks-reducer.ts'
-import { setAppStatusAC } from '../../app/app-reducer.ts'
+import { setAppStatusAC, setErrorAC } from '../../app/app-reducer.ts'
 
 // export const fetchDecksTC = () => (dispatch: Dispatch) => {
 //   decksAPI.fetchDecks().then((res) => {
@@ -49,8 +49,18 @@ export const deleteDeckTC = (id: string) => async (dispatch: Dispatch) => {
   })
 }
 
+// export const updateDeckTC = (params: UpdateDeckParams) => async (dispatch: Dispatch) => {
+//   return decksAPI.updateDeck(params).then((res) => {
+//     dispatch(updateDeckAC(res.data))
+//   })
+// }
+
 export const updateDeckTC = (params: UpdateDeckParams) => async (dispatch: Dispatch) => {
-  return decksAPI.updateDeck(params).then((res) => {
+  try {
+    const res = await decksAPI.updateDeck(params)
     dispatch(updateDeckAC(res.data))
-  })
+  } catch (error) {
+    const serverError = dispatch(setErrorAC(error.response.data.errorMessages[0].message))
+    console.log('Ошибка сервера: ' + serverError)
+  }
 }
