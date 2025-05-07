@@ -19,4 +19,4 @@ yarn
 yarn run dev
 ```
 
-[https://github.com/StarkovSergey/04-sprint-02-add-lesson-for-students](Стартовый проект)
+- [Стартовый проект](https://github.com/StarkovSergey/04-sprint-02-add-lesson-for-students)
